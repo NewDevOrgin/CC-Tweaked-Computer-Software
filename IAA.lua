@@ -2,14 +2,14 @@ local modem = peripheral.find("modem")
 local NM = require("NetworManager")
 
 function lastIA()
-    local File = fs.open("LastIA", "r")
+    local File = fs.open("LastIA.txt", "r")
     local LastIA = tonumber(File.readAll())
     File.close()
     return LastIA
 end
 
 function writeIA(IA)
-    local File = fs.open("LastIA", "w")
+    local File = fs.open("LastIA.txt", "w")
     File.write(tostring(IA))
     File.close()
 end
