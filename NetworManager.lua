@@ -3,7 +3,7 @@ local IA = 111
 
 local NM = {}
 
-local IAFile = fs.open("IA", "r")
+local IAFile = fs.open("IA.txt", "r")
 IA = tonumber(IAFile.readAll())
 IAFile.close()
 
@@ -49,7 +49,7 @@ function NM.SetIA()
     local response = NM.AwaitResponse()
     if (response ~= "Timeout") then
         IA = tonumber(response)
-        local File = fs.open("IA", "w")
+        local File = fs.open("IA.txt", "w")
         File.write(tostring(IA))
         File.close()
     else
