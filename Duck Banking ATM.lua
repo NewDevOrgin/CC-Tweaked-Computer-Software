@@ -26,31 +26,17 @@ if (not inService) then
 end
 
 function getBalance(acc)
-    local payload = {
-        method="get",
-        acc=acc
-    }
-    modem.transmit(6769, 6770, payload)
-    local t = os.startTimer(2)
-    local e, s, c, r, m, d
-    repeat
-        e, s, c, r, m, d = os.pullEvent()
-    until (e == "modem_message") or (e == "timer" and s == t)
-    if (e == "modem_message") then
-        if (m ~= "Invalid") then
-            return m
-        end
-    end
-    return "Invalid"
+    local bfile = fs.open("DATABASE/" .. acc .. ".entry", "r")
+    local balance = bfile.read():gsub("%s+", "")
+    bfile.close()
+
+    return balance
 end
 
 function setBalance(acc, balance)
-    local payload = {
-        method="get",
-        account=acc,
-        balance=balance
-    }
-    modem.transmit(6769, 6770, payload)
+    local bfile = fs.open("DATABASE/" .. acc .. ".entry", "w")
+    bfile.write(balance)
+    bfile.close()
 end
 
 function openOutput()
